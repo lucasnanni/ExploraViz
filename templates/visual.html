@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>ExploraViz</title>
+  <link href='http://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+  <script src="{{ url_for('static', filename='slimScroll.min.js') }}"></script>
+  <script src="http://d3js.org/d3.v2.js"></script>
+</head>
+<body>
+  <div id="container" style="min-height:100%; height:100%;">
+    <div class="search-header">
+      <a class="logo" href="./">ExploraViz</a>
+      <div class="search-items">
+        <form method="get" action="{{ url_for('vis') }}">
+          <div class="search-bar">
+            <input type="text" id="si" name="query" class="search-input" />
+            <input type="submit" id="sb" class="search-button" label="Search" value="Search"/>
+          </div>
+          <input type="number" name="count" min="1" max="100" value="50" class="counter-input"/>
+        </form>
+      </div>
+      <div id="options-bar"></div>
+      <div id="results-title"></div>
+    </div>
+    
+    {% if params.mode == "vis" %}
+    <div id="main-vis">
+      <div class="reswrap">
+        <div class="res" id="res">
+          <!-- the results will be automatically placed here -->
+        </div>
+        <div id="switch">
+          <div class="switch-arrow-border"></div>
+          <div class="switch-arrow"></div>
+        </div>
+      </div>
+      
+      <div class="vis" id="vis">
+        <!-- the visualization will be automatically placed here -->
+      </div>
+      <script type="text/javascript">
+        var gdata = {{ params.data|safe }};
+      </script>
+      <script type="text/javascript" src="{{ url_for('static', filename='visual.js') }}"></script>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
