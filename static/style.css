@@ -4,31 +4,73 @@ body {
   height: 100%;
 }
 
-.node circle {
-  cursor: pointer;
+.visBack {
+  cursor : crosshair;
 }
 
 line.link {
+  transition: all 0.2s;
   fill: none;
   stroke: #336699;
   stroke-width: 2.5px;
-  opacity: 0.2;
+  cursor: pointer;
+}
+
+.link-selected {
+  fill: #000000 !important;
+  stroke: #000000 !important;
+  stroke-width: 5.0px !important;
 }
 
 .alpha20 {
   opacity: 0.2;
 }
 
-.node text {
-  fill: #000;
-  text-shadow: -1px -1px 0px #FFF;
+text.linklabel {
+  fill: #8B0000;
+  text-shadow: 0px 0px 1px #FFF;
   cursor: pointer;
   font-family: sans-serif;
   font-size: 10pt;
   font-weight: bold;
 }
 
+g.node {
+  transition: all 0.2s;
+}
+
+circle.node {
+  transition: all 0.2s;
+  stroke-width: 2.5px;
+  cursor: pointer;
+}
+
+.node-selected {
+  fill: #000000 !important;
+  stroke: #000000 !important; 
+}
+
+circle.node.nodehover {
+  stroke-width: 5px;
+}
+
+.alpha25 {
+  opacity: 0.25;
+}
+
+text.nodelabel {
+  fill: #FFF;
+  text-shadow: 0px 0px 3px #000;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+
+
 div.vis {
+  top: 43px;
   height: auto;
   position: relative;
 }

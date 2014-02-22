@@ -1,0 +1,163 @@
+{
+    "documents": [
+        {
+            "id": 0
+        },
+        {
+            "id": 1
+        },
+        {
+            "id": 2
+        },
+        {
+            "id": 3
+        },
+        {
+            "id": 4
+        },
+        {
+            "id": 5
+        },
+        {
+            "id": 6
+        },
+        {
+            "id": 7
+        },
+        {
+            "id": 8
+        },
+        {
+            "id": 9
+        }
+    ],
+    
+    "clusters": [
+        {
+            "id": "Cluster_0",
+            "documents": [0, 1, 2, 3, 4, 9],
+            "links": ["Cluster_1", "Cluster_3", "Cluster_4"],
+            "color": "#1f77b4",
+            "selectNode": false
+        },
+        {
+            "id": "Cluster_1",
+            "documents": [0, 1, 3, 5],
+            "links": ["Cluster_0", "Cluster_2", "Cluster_3"],
+            "color": "#ff7f0e",
+            "selectNode": false
+        },
+        {
+            "id": "Cluster_2",
+            "documents": [5, 6, 7, 8],
+            "links": ["Cluster_1", "Cluster_3", "Cluster_4", "Cluster_5"],
+            "color": "#2ca02c",
+            "selectNode": false
+        },
+        {
+            "id": "Cluster_3",
+            "documents": [1, 3, 5, 9],
+            "links": ["Cluster_0", "Cluster_1", "Cluster_2", "Cluster_4"],
+            "color": "#d62728",
+            "selectNode": false
+        },
+        {
+            "id": "Cluster_4",
+            "documents": [4, 5, 6],
+            "links": ["Cluster_0", "Cluster_2", "Cluster_3"],
+            "color": "#9467bd",
+            "selectNode": false
+        },
+        {
+            "id": "Cluster_5",
+            "documents": [7, 8],
+            "links": ["Cluster_2"],
+            "color": "#8c564b",
+            "selectNode": false
+        }
+    ],
+    
+    "links": [
+        {
+            "id": "Cluster_0.Cluster_1",
+            "label": "Link_0.1",
+            "source": "Cluster_0",
+            "target": "Cluster_1",
+            "weight": 3,
+            "color": "#4169E1",
+            "selectLink": false
+        }, 
+        {
+            "id": "Cluster_0.Cluster_3",
+            "label": "Link_0.3",
+            "source": "Cluster_0",
+            "target": "Cluster_3",
+            "weight": 3,
+            "color": "#4169E1",
+            "selectLink": false
+        },
+        {
+            "id": "Cluster_0.Cluster_4",
+            "label": "Link_0.4",
+            "source": "Cluster_0",
+            "target": "Cluster_4",
+            "weight": 1,
+            "color": "#4169E1",
+            "selectLink": false
+        },
+        {
+            "id": "Cluster_1.Cluster_2",
+            "label": "Link_1.2",
+            "source": "Cluster_1",
+            "target": "Cluster_2",
+            "weight": 1,
+            "color": "#4169E1",
+            "selectLink": false
+        },
+        {
+            "id": "Cluster_1.Cluster_3",
+            "label": "Link_1.3",
+            "source": "Cluster_1",
+            "target": "Cluster_3",
+            "weight": 4,
+            "color": "#4169E1",
+            "selectLink": false
+        },
+        {
+            "id": "Cluster_2.Cluster_3",
+            "label": "Link_2.3",
+            "source": "Cluster_2",
+            "target": "Cluster_3",
+            "weight": 2,
+            "color": "#4169E1",
+            "selectLink": false
+        },
+        {
+            "id": "Cluster_2.Cluster_4",
+            "label": "Link_2.4",
+            "source": "Cluster_2",
+            "target": "Cluster_4",
+            "weight": 2,
+            "color": "#4169E1",
+            "selectLink": false
+        },
+        {
+            "id": "Cluster_2.Cluster_5",
+            "label": "Link_2.5",
+            "source": "Cluster_2",
+            "target": "Cluster_5",
+            "weight": 2,
+            "color": "#4169E1",
+            "selectLink": false
+        },
+        {
+            "id": "Cluster_3.Cluster_4",
+            "label": "Link_3.4",
+            "source": "Cluster_3",
+            "target": "Cluster_4",
+            "weight": 2,
+            "color": "#4169E1",
+            "selectLink": false
+        }
+    ]
+}
