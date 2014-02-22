@@ -60,12 +60,12 @@ var links,
     state = {"normal": 0, "highlighted": 1, "selected": 2};
 
 //line displayed when dragging new nodes
-var drag_line = vis.append("line")
-    .attr("class", "drag_line")
-    .attr("x1", 0)
-    .attr("y1", 0)
-    .attr("x2", 0)
-    .attr("y2", 0);
+// var drag_line = vis.append("line")
+//     .attr("class", "drag_line")
+//     .attr("x1", 0)
+//     .attr("y1", 0)
+//     .attr("x2", 0)
+//     .attr("y2", 0);
 
 d3.select(window)
     .on("keydown", keydown)
