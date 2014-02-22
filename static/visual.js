@@ -15,7 +15,7 @@ var svg = d3.select("#vis").append("svg:svg")
     .attr("class", "vis");
 
 var colorScale = d3.scale.category20(),
-        color = function(c) {return d3.interpolateRgb(colorScale(c),d3.rgb(255,255,255))(0.3);};
+    color = function(c) {return d3.interpolateRgb(colorScale(c),d3.rgb(255,255,255))(0.3);};
 
 // var graph = svg.insert("svg:g")
 //      .attr("width", 500)
@@ -54,8 +54,8 @@ var selected_node = null,
     mouseup_node = null;
 
 var arrayId;
-    
-var links, 
+
+var links,
     selState = {state: 0, nodes: []},
     state = {"normal": 0, "highlighted": 1, "selected": 2};
 
@@ -100,7 +100,7 @@ function tick() {
         x2 = targetOf(d).x,
         y1 = sourceOf(d).y,
         y2 = targetOf(d).y;
-    return Math.abs((x2 - x1)/2) + Math.min(x1, x2); 
+    return Math.abs((x2 - x1)/2) + Math.min(x1, x2);
     })
     .attr("y", function(d) {
     var x1 = sourceOf(d).x,
@@ -133,7 +133,7 @@ function buildNodes() {
                 return node.id == nid;
             })[0];
         });
-    });  
+    });
 }
 
 d3.json("static/data.json", function(json) {
@@ -150,16 +150,16 @@ function nodesId(node){
 
 function update() {
     var linkEnter;
-    
+
     force
         .nodes(nodes)
         .start();
 
     arrayId = d3.set(nodes.map(nodesId));
- 
+
     // Updating links
     link = linkGroup.selectAll("g.link")
-        .data(links, function(d) {return d.id;});   
+        .data(links, function(d) {return d.id;});
 
     // Entering new links
     var linkEnter = link.enter().append("svg:g")
@@ -188,13 +188,13 @@ function update() {
         .attr("y2", function(d) {targetOf(d).y})
 
     linkline = link.selectAll('line.link');
-    
+
     // Exiting old links
     link.exit().remove();
 
     //Updating link name
     linkname = linkGroup.selectAll("text.linklabel")
-        .data(links);   
+        .data(links);
 
     // Entering new linknames
     linkname.enter().append("text")
@@ -203,7 +203,7 @@ function update() {
                 x2 = targetOf(d).x,
                 y1 = sourceOf(d).y,
                 y2 = targetOf(d).y;
-            return Math.abs((x2-x1)/2) + Math.min(x1, x2); 
+            return Math.abs((x2-x1)/2) + Math.min(x1, x2);
         })
         .attr("y", function(d) {
             var x1 = sourceOf(d).x,
@@ -238,7 +238,7 @@ function update() {
             if (mousedown_node === selected_node) selected_node = null;
             else selected_node = mousedown_node;
             selected_link = null;
-                
+
             selectNode(this,selected_node);
         })
         .on("mouseup", function(d) {
@@ -253,10 +253,10 @@ function update() {
 
     // Entering circles to nodes
     nodeEnter.insert("svg:circle")
-            .attr("class", "node")
-            .attr("r", function(d) {return Math.max(nodeFactorSize(d.documents.length), 30); })
-            .style("fill", function(d) {return d.color;})
-            .style("stroke", function(d) {return d3.rgb(d.color).darker(1);});
+        .attr("class", "node")
+        .attr("r", function(d) {return Math.max(nodeFactorSize(d.documents.length), 30); })
+        .style("fill", function(d) {return d.color;})
+        .style("stroke", function(d) {return d3.rgb(d.color).darker(1);});
 
     //Entering labels to nodes
     nodeEnter.insert("text")
@@ -271,22 +271,21 @@ function update() {
 
 //Reset mouse events
 function resetMouseVars() {
-  mousedown_node = null;
-  mouseup_node = null;
-  mousedown_link = null;
+    mousedown_node = null;
+    mouseup_node = null;
+    mousedown_link = null;
 }
 
 //creating new links while dragging the mouse
 function mousemove() {
-  if (!mousedown_node) return;
+    if (!mousedown_node) return;
 
-  // update drag line
-  drag_line
-      .attr("x1", mousedown_node.x)
-      .attr("y1", mousedown_node.y)
-      .attr("x2", d3.svg.mouse(this)[0])
-      .attr("y2", d3.svg.mouse(this)[1]);
-
+    // update drag line
+    drag_line
+        .attr("x1", mousedown_node.x)
+        .attr("y1", mousedown_node.y)
+        .attr("x2", d3.svg.mouse(this)[0])
+        .attr("y2", d3.svg.mouse(this)[1]);
 }
 
 function linkMouseOver(d,i) {
@@ -306,7 +305,7 @@ function nodeMouseOver(d) {
     if (d.selstate != "selected")
         d.selstate = "mouseover";
     highlightNetwork(this,d);
-    
+
 }
 
 // Opacity of nodes
@@ -315,7 +314,7 @@ function highlightNetwork(g,d) {
 
         d3.select(g).select("circle")
             .classed("nodehover", true);
-        
+
         svg.selectAll("line.link")
             .filter(function(e){
                 return e.source != d && e.target != d;
@@ -357,7 +356,7 @@ function resetNodes(g,d,i) {
             .classed("alpha25", false);
 
         svg.selectAll("g.node")
-           .classed("alpha25", false); 
+           .classed("alpha25", false);
 
         svg.selectAll("text")
             .classed("alpha25", false);
@@ -367,9 +366,9 @@ function resetNodes(g,d,i) {
 //Changing node names
 function nameNodes(g, i) {
     if (!(selState.state == state["selected"])) {
-      
+
         selState.state = state["highlighted"];
-          
+
             var id = g.id,
                 j;
 
@@ -382,7 +381,7 @@ function nameNodes(g, i) {
                         nodes[j].id = prompt(nodes[j].id);
                     }
                 }
-            }   
+            }
 
         svg.selectAll(".nodelabel")
             .text(function(d) { return d.id; });
@@ -400,10 +399,10 @@ function updateNodeLabel() {
 
 //Changing link name
 function nameLink(g,d) {
-  if (!(selState.state == state["selected"])) {
-      
-      selState.state = state["highlighted"];
-      
+    if (!(selState.state == state["selected"])) {
+
+        selState.state = state["highlighted"];
+
         var source = g.source.id,
             target = g.target.id;
 
@@ -420,10 +419,10 @@ function nameLink(g,d) {
             }
         });
 
-    svg.selectAll(".linklabel")
-        .text(function(d) { return d.label; });
+        svg.selectAll(".linklabel")
+            .text(function(d) { return d.label; });
 
-    updateLinkLabel();
+        updateLinkLabel();
     }
     update();
 }
@@ -449,10 +448,10 @@ function removeNode(d) {
     update();
 }
 
-//Remove links   
+//Remove links
 function removeLink(d) {
     links.splice(links.indexOf(d), 1);
-    
+
     update();
 }
 
@@ -496,11 +495,11 @@ function newLink(k,m) {
         };
 
     newLink.label = "No_Name";
-    newLink.source = m;       
+    newLink.source = m;
     newLink.target = k;
     newLink.id = newLink.source.id + "." + newLink.target.id;
     invert = newLink.target.id + "." + newLink.source.id;
-    
+
 
     for(i=0; i<links.length; i++) {
         if(newLink.id == links[i].id || invert == links[i].id){
@@ -534,7 +533,7 @@ function selectNode(g,d) {
 
 /*function selectNode(g,d) {
     var previousSelection;
-    
+
     if (!d.selectNode) {
         nodes.forEach(function(node){
             if (node.selectNode) previousSelection = node;
@@ -548,7 +547,7 @@ function selectNode(g,d) {
             d3.selectAll("circle")
                 .classed("node-selected", false);
 
-            previousSelection.selectNode = false;        
+            previousSelection.selectNode = false;
             d.selectNode = false;
             selected_node.d = null;
 
@@ -596,7 +595,7 @@ function keydown() {
                 removeNode(selected_node);
                 selected_node = null;
                 d3.selectAll("circle")
-                    .classed("node-selected", false); 
+                    .classed("node-selected", false);
             } else if (selected_link) {
                 removeLink(selected_link);
                 selected_link = null;
@@ -611,11 +610,11 @@ function keydown() {
             if (selected_node) {
                 selected_node = null;
                 d3.selectAll("circle")
-                    .classed("node-selected", false); 
+                    .classed("node-selected", false);
             } else if (selected_link) {
                 selected_link = null;
                 d3.selectAll("line.link")
-                    .classed("link-selected", false);                
+                    .classed("link-selected", false);
             }
             break;
         }
