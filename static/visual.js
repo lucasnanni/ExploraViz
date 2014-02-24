@@ -59,6 +59,7 @@ var links,
     selState = {state: 0, nodes: []},
     state = {"normal": 0, "highlighted": 1, "selected": 2};
 
+/*
 //line displayed when dragging new nodes
 var drag_line = vis.append("line")
     .attr("class", "drag_line")
@@ -66,6 +67,7 @@ var drag_line = vis.append("line")
     .attr("y1", 0)
     .attr("x2", 0)
     .attr("y2", 0);
+*/
 
 d3.select(window)
     .on("keydown", keydown)
@@ -193,11 +195,11 @@ function update() {
     link.exit().remove();
 
     //Updating link name
-    linkname = linkGroup.selectAll("text.linklabel")
+    linkname = link.selectAll("text.linklabel")
         .data(links);
 
     // Entering new linknames
-    linkname.enter().append("text")
+    linkname.enter().append("svg:text")
         .attr("x", function(d) {
             var x1 = sourceOf(d).x,
                 x2 = targetOf(d).x,
@@ -253,10 +255,10 @@ function update() {
 
     // Entering circles to nodes
     nodeEnter.insert("svg:circle")
-        .attr("class", "node")
-        .attr("r", function(d) {return Math.max(nodeFactorSize(d.documents.length), 30); })
-        .style("fill", function(d) {return d.color;})
-        .style("stroke", function(d) {return d3.rgb(d.color).darker(1);});
+            .attr("class", "node")
+            .attr("r", function(d) {return Math.max(nodeFactorSize(d.documents.length), 30); })
+            .style("fill", function(d) {return d.color;})
+            .style("stroke", function(d) {return d3.rgb(d.color).darker(1);});
 
     //Entering labels to nodes
     nodeEnter.insert("text")
@@ -277,17 +279,18 @@ function resetMouseVars() {
 }
 
 //creating new links while dragging the mouse
-function mousemove() {
-    if (!mousedown_node) return;
+/*function mousemove() {
+  if (!mousedown_node) return;
 
-    // update drag line
-    drag_line
-        .attr("x1", mousedown_node.x)
-        .attr("y1", mousedown_node.y)
-        .attr("x2", d3.svg.mouse(this)[0])
-        .attr("y2", d3.svg.mouse(this)[1]);
+  // update drag line
+  drag_line
+      .attr("x1", mousedown_node.x)
+      .attr("y1", mousedown_node.y)
+      .attr("x2", d3.svg.mouse(this)[0])
+      .attr("y2", d3.svg.mouse(this)[1]);
+
 }
-
+*/
 function linkMouseOver(d,i) {
     return;
 }
@@ -369,19 +372,19 @@ function nameNodes(g, i) {
 
         selState.state = state["highlighted"];
 
-            var id = g.id,
-                j;
+        var id = g.id,
+            j;
 
-            for(j=0; j<nodes.length; j++){
-                if (nodes[j].id == id) {
+        for(j=0; j<nodes.length; j++){
+            if (nodes[j].id == id) {
+                nodes[j].id = prompt(nodes[j].id);
+
+                while ((arrayId.has(nodes[j].id) == true) || (nodes[j].id == null || nodes[j].id == "")) {
+                    alert("Please, insert name.");
                     nodes[j].id = prompt(nodes[j].id);
-
-                    while ((arrayId.has(nodes[j].id) == true) || (nodes[j].id == null || nodes[j].id == "")) {
-                        alert("Please, insert name.");
-                        nodes[j].id = prompt(nodes[j].id);
-                    }
                 }
             }
+        }
 
         svg.selectAll(".nodelabel")
             .text(function(d) { return d.id; });
@@ -401,28 +404,28 @@ function updateNodeLabel() {
 function nameLink(g,d) {
     if (!(selState.state == state["selected"])) {
 
-        selState.state = state["highlighted"];
+    selState.state = state["highlighted"];
 
-        var source = g.source.id,
-            target = g.target.id;
+    var source = g.source.id,
+        target = g.target.id;
 
-        //Changing name
-        links.forEach(function(d) {
-            if (d.source.id == source) {
-                if (d.target.id == target) {
+    //Changing name
+    links.forEach(function(d) {
+        if (d.source.id == source) {
+            if (d.target.id == target) {
+                d.label = prompt(d.label);
+                while (d.label == null || d.label == "") {
+                    alert("Please, insert name.");
                     d.label = prompt(d.label);
-                    while (d.label == null || d.label == "") {
-                        alert("Please, insert name.");
-                        d.label = prompt(d.label);
-                    }
                 }
             }
-        });
+        }
+    });
 
-        svg.selectAll(".linklabel")
-            .text(function(d) { return d.label; });
+    svg.selectAll(".linklabel")
+        .text(function(d) { return d.label; });
 
-        updateLinkLabel();
+    updateLinkLabel();
     }
     update();
 }
@@ -462,12 +465,12 @@ function addNode() {
     var newNode;
 
     newNode = {
-            "id": "",
-            "documents": [],
-            "links": [],
-            "color": "#DCDCDC",
-            "selectNode": false
-            };
+        "id": "",
+        "documents": [],
+        "links": [],
+        "color": "#DCDCDC",
+        "selectNode": false
+    };
 
     while ((newNode.id == "" || newNode.id == null) || (arrayId.has(newNode.id) == true)) {
         newNode.id = prompt("Please, enter a name for the cluster");
@@ -622,15 +625,14 @@ function keydown() {
 }
 
 function keyup() {
-  lastKeyDown = -1;
-
-  // ctrl
-  if(d3.event.keyCode === 17) {
+    lastKeyDown = -1;
+    // ctrl
+    if(d3.event.keyCode === 17) {
     nodeEnter
-      .on('mousedown.drag', null)
-      .on('touchstart.drag', null);
+        .on('mousedown.drag', null)
+        .on('touchstart.drag', null);
     svg.classed('ctrl', false);
-  }
+    }
 }
 
 //??
